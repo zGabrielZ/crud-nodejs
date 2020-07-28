@@ -1,10 +1,8 @@
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('meuapp','root','gabriel',{
+const conexao = new Sequelize('meuapp','root','gabriel',{
     host:'localhost',
-    dialect:'mysql'
+    dialect:'mysql',
+    timezone:'-03:00'
 })
 
-module.exports = {
-    Sequelize:Sequelize,
-    sequelize:sequelize
-}
+module.exports = conexao
