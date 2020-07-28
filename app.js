@@ -4,6 +4,10 @@ const bodyParser = require('body-parser')
 const Usuario = require('./modelo/Usuario')
 const UsuarioController = require('./controller/UsuarioController')
 const db = require('./db/bancoDeDados')
+const cors = require('cors')
+
+// config do cors
+app.use(cors())
 
 // config de bodyparser 
 app.use(bodyParser.urlencoded({extended:true}))
