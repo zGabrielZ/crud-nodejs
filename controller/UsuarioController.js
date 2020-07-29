@@ -1,6 +1,8 @@
 const express = require('express')
 const rota = express.Router()
 const Usuario = require('../modelo/Usuario')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // rota para inserir 
 
@@ -105,6 +107,28 @@ rota.get('/usuarios/:id',async(req,res)=>{
             res.status(400).send({messagem:'Ocorreu um erro : '+erro})
         })
 
+})
+
+// rota para procurar 
+
+rota.post('/usuarios',async(req,res)=>{
+    
+    let pesquisar = req.query.funcao
+    let query = '%' + pesquisar + '%'
+    
+    await Usuario.findAll({
+        where: { funcao: { [Op.like]: query } }, raw: true, order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then(usuarios=>{
+        if(usuarios == ''){
+            res.status(404).send({messagem:'Não foi encontrado nenhum usuário com esta função'})
+        } else {
+            res.status(200).send(usuarios)
+        }
+    }).catch(erro=>{
+        res.status(400).send({messagem:'Ocorreu um erro : '+erro})
+    })
 })
 
 
