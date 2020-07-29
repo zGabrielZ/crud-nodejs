@@ -13,7 +13,7 @@ rota.post('/usuarios/inserir',async(req,res)=>{
         .then(usuarios=>{
             res.status(201).send(usuarios)
         }).catch(erro=>{
-            res.status(400).send({messagem:'Ocorreu um erro : '+erro})
+            res.status(400).send({error:erro})
         })
 
 
@@ -39,7 +39,7 @@ rota.put('/usuarios/:id',async(req,res)=>{
                 res.status(204).send({messagem:'Jogo atualizado com sucesso'})
             }
         }).catch(erro=>{
-            res.status(400).send({messagem:'Ocorreu um erro : '+erro})
+            res.status(400).send({error:erro})
         })
 
 })
