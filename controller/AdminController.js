@@ -1,7 +1,6 @@
 const express = require('express')
 const rota = express.Router()
 const Admin = require('../modelo/Admin')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 
@@ -12,17 +11,11 @@ const jwtSecret = 'aleatorio'
 rota.post('/admins/inserir', async (req, res) => {
     let { nome, email, senha } = req.body
 
-
-    let salt = bcrypt.genSaltSync(10)
-    let hash = bcrypt.hashSync(senha, salt)
-
     Admin.findOne({ where: { email: email } })
         .then(admins => {
             if (admins == undefined) {
                 Admin.create({
-                    nome: nome,
-                    email: email,
-                    senha: hash
+                    nome,email,senha
                 }).then(admins => {
                     res.status(201).send(admins)
                 }).catch(erro => {
