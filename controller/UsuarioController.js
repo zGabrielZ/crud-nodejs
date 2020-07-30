@@ -3,10 +3,11 @@ const rota = express.Router()
 const Usuario = require('../modelo/Usuario')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const auth = require('../middleware/auth')
 
 // rota para inserir 
 
-rota.post('/usuarios/inserir',async(req,res)=>{
+rota.post('/usuarios/inserir',auth,async(req,res)=>{
     let {nome,sobrenome,funcao,salario} = req.body
 
     await Usuario.create({nome,sobrenome,funcao,salario})
@@ -21,7 +22,7 @@ rota.post('/usuarios/inserir',async(req,res)=>{
 
 // rota para atualizar 
 
-rota.put('/usuarios/:id',async(req,res)=>{
+rota.put('/usuarios/:id',auth,async(req,res)=>{
     let id = req.params.id
     let {nome,sobrenome,funcao,salario} = req.body
 
@@ -46,7 +47,7 @@ rota.put('/usuarios/:id',async(req,res)=>{
 
 // rota para deletar 
 
-rota.delete('/usuarios/:id',async(req,res)=>{
+rota.delete('/usuarios/:id',auth,async(req,res)=>{
     let id = req.params.id
 
     if(isNaN(id)){
@@ -72,7 +73,7 @@ rota.delete('/usuarios/:id',async(req,res)=>{
 
 // rota para listagem 
 
-rota.get('/usuarios',async(req,res)=>{
+rota.get('/usuarios',auth,async(req,res)=>{
     await Usuario.findAll({
         raw: true, order: [
             ['createdAt', 'DESC']
@@ -90,7 +91,7 @@ rota.get('/usuarios',async(req,res)=>{
 
 // rota para buscar id 
 
-rota.get('/usuarios/:id',async(req,res)=>{
+rota.get('/usuarios/:id',auth,async(req,res)=>{
     let id = req.params.id
     if(isNaN(id)){
         res.status(400).send({messagem:'Isso não é um numero'})
@@ -111,7 +112,7 @@ rota.get('/usuarios/:id',async(req,res)=>{
 
 // rota para procurar 
 
-rota.post('/usuarios',async(req,res)=>{
+rota.post('/usuarios',auth,async(req,res)=>{
     
     let pesquisar = req.query.funcao
     let query = '%' + pesquisar + '%'

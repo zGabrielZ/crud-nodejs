@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const Usuario = require('./modelo/Usuario')
+const Admin = require('./modelo/Admin')
 const UsuarioController = require('./controller/UsuarioController')
+const AdminController = require('./controller/AdminController')
 const db = require('./db/bancoDeDados')
 const cors = require('cors')
 
@@ -24,6 +26,7 @@ db.authenticate()
 
 // config da rota 
 app.use('/',UsuarioController)
+app.use('/',AdminController)
 
 
 // config de do servidor 
