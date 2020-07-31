@@ -74,6 +74,7 @@ rota.delete('/usuarios/:id',auth,async(req,res)=>{
 // rota para listagem 
 
 rota.get('/usuarios',auth,async(req,res)=>{
+
     await Usuario.findAll({
         raw: true, order: [
             ['createdAt', 'DESC']

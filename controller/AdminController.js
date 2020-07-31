@@ -59,12 +59,32 @@ rota.get('/admins/:id',auth ,async (req, res) => {
         res.status(400).send({ messagem: 'Isso não é um numero' })
     }
 
+    var HATEOS = [
+        {
+            href:`http://localhost:8080/admins/inserir`,
+            method:'POST',
+            rel:'post_admin'
+        },{
+            href:`http://localhost:8080/admins`,
+            method:'GET',
+            rel:'get_all_admins'
+        },{
+            href:`http://localhost:8080/admins/${id}`,
+            method:'GET',
+            rel:'get_admin'
+        },{
+            href:`http://localhost:8080/admins/autenticar`,
+            method:'POST',
+            rel:'post_autenticar_admin'
+        }
+    ]
+
     await Admin.findOne({ where: { id: id } })
         .then(admins => {
             if (admins == null) {
                 res.status(404).send({ messagem: 'Admin não encontrado' })
             } else {
-                res.status(200).send(admins)
+                res.status(200).send({admins:admins,_links:HATEOS})
             }
         }).catch(erro => {
             res.status(400).send({ messagem: 'Ocorreu um erro : ' + erro })
