@@ -3,6 +3,7 @@ const rota = express.Router()
 const Admin = require('../modelo/Admin')
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
+const bcrypt = require('bcryptjs')
 
 const jwtSecret = 'aleatorio'
 
@@ -88,14 +89,16 @@ rota.post('/admins/autenticar', async (req, res) => {
                             if(erro){
                                 res.status(400).json({erro:'Falha interna'})
                             } else {
-                                res.status(200).json({token:token})
+                                res.status(200).json({token:token,id:admins.id,nome:admins.nome})
                             }
                         }
                     )
+                } else {
+                    res.status(400).send({error:'Senha inválida'})   
                 }
 
             } else {
-                res.status(400).send({messagem:'Email inválido'})
+                res.status(400).send({error:'Email inválido'})
             }
         }).catch(erro => {
             res.status(400).send({ error: 'Ocorreu um erro : ' + erro })

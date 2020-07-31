@@ -22,6 +22,8 @@ const Admin = conexao.define('admins', {
                 msg: 'Campo email não pode ser vazio'
             }, notNull: {
                 msg: 'Campo email não pode ser nulo'
+            }, isEmail: {
+                msg: 'É necessário digitar email válido'
             }
         }
     },

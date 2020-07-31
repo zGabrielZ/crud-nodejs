@@ -13,7 +13,6 @@ function auth(req, res, next) {
             } else {
                 req.token = token
                 req.adminLogado = { id: data.id, nome: data.nome, email: data.email }
-                console.log(req.adminLogado)
                 next()
             }
         })
