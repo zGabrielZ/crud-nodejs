@@ -37,7 +37,7 @@ rota.put('/usuarios/:id',auth,async(req,res)=>{
                 res.status(404).send({messagem:'Usuário não encontrado'})
             } else {
                 Usuario.update({nome,sobrenome,funcao,salario},{where:{id:id}})
-                res.status(204).send({messagem:'Jogo atualizado com sucesso'})
+                res.status(204).send({messagem:'Usuário atualizado com sucesso'})
             }
         }).catch(erro=>{
             res.status(400).send({error:erro})
